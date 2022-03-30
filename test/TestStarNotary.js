@@ -74,8 +74,6 @@ it('lets user2 buy a star and decreases its balance in ether', async() => {
 
     const balanceAfterUser2BuysStar = await web3.eth.getBalance(user2);
     assert.equal(web3.utils.toBN(balanceOfUser2BeforeTransaction).toString(), web3.utils.toBN(starPrice).add(web3.utils.toBN(balanceAfterUser2BuysStar)).add(gasPrice.mul(gasUsed)).toString());
-
-
 });
 
 // Implement Task 2 Add supporting unit tests
@@ -86,6 +84,18 @@ it('can add the star name and star symbol properly', async() => {
    assert.equal(await instance.name.call(), "Star Notary Project");
    assert.equal(await instance.symbol.call(), "SNP");
 });
+
+it('lookUptokenIdToStarInfo test', async() => {
+    const from = accounts[1];
+    const starName = "My special star";
+    const starId = 6;
+
+    const instance = await StarNotary.deployed();
+    await instance.createStar(starName, starId, { from });
+
+    assert.equal(await instance.lookUptokenIdToStarInfo.call(starId), starName);
+});
+
 
 it('lets 2 users exchange stars', async() => {
     // 1. create 2 Stars with different tokenId
@@ -99,8 +109,3 @@ it('lets a user transfer a star', async() => {
     // 3. Verify the star owner changed.
 });
 
-it('lookUptokenIdToStarInfo test', async() => {
-    // 1. create a Star with different tokenId
-    // 2. Call your method lookUptokenIdToStarInfo
-    // 3. Verify if you Star name is the same
-});
