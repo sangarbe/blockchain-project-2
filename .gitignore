@@ -1,0 +1,13 @@
+# artifacts
+build
+
+# dependencies
+node_modules
+app/node_modules
+
+# reports
+coverage
+
+# editors
+.DS_Store
+.idea
