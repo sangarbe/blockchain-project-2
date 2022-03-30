@@ -1,5 +1,8 @@
 const StarNotary = artifacts.require("StarNotary");
 
 module.exports = function(deployer) {
-  deployer.deploy(StarNotary);
+  const name = "Star Notary Project";
+  const symbol = "SNP";
+
+  deployer.deploy(StarNotary, name, symbol);
 };

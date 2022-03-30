@@ -63,21 +63,28 @@ it('lets user2 buy a star and decreases its balance in ether', async() => {
     let starId = 5;
     let starPrice = web3.utils.toWei(".01", "ether");
     let balance = web3.utils.toWei(".05", "ether");
+
     await instance.createStar('awesome star', starId, {from: user1});
     await instance.putStarUpForSale(starId, starPrice, {from: user1});
-    let balanceOfUser1BeforeTransaction = await web3.eth.getBalance(user2);
     const balanceOfUser2BeforeTransaction = await web3.eth.getBalance(user2);
-    await instance.buyStar(starId, {from: user2, value: balance, gasPrice:0});
+    const _tx = await instance.buyStar(starId, {from: user2, value: balance});
+    const gasUsed = web3.utils.toBN(_tx.receipt.gasUsed);
+    const gasPrice = web3.utils.toBN(_tx.receipt.effectiveGasPrice);
+    // console.log(tx, _tx);
+
     const balanceAfterUser2BuysStar = await web3.eth.getBalance(user2);
-    let value = Number(balanceOfUser2BeforeTransaction) - Number(balanceAfterUser2BuysStar);
-    assert.equal(value, starPrice);
+    assert.equal(web3.utils.toBN(balanceOfUser2BeforeTransaction).toString(), web3.utils.toBN(starPrice).add(web3.utils.toBN(balanceAfterUser2BuysStar)).add(gasPrice.mul(gasUsed)).toString());
+
+
 });
 
 // Implement Task 2 Add supporting unit tests
 
 it('can add the star name and star symbol properly', async() => {
-    // 1. create a Star with different tokenId
-    //2. Call the name and symbol properties in your Smart Contract and compare with the name and symbol provided
+   const instance = await StarNotary.deployed();
+
+   assert.equal(await instance.name.call(), "Star Notary Project");
+   assert.equal(await instance.symbol.call(), "SNP");
 });
 
 it('lets 2 users exchange stars', async() => {
