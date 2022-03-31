@@ -115,8 +115,16 @@ it('lets 2 users exchange stars', async() => {
 });
 
 it('lets a user transfer a star', async() => {
-    // 1. create a Star with different tokenId
-    // 2. use the transferStar function implemented in the Smart Contract
-    // 3. Verify the star owner changed.
+    const from = accounts[1];
+    const to = accounts[2];
+    const starName = "Star to transfer";
+    const starId = 9;
+
+    const instance = await StarNotary.deployed();
+    await instance.createStar(starName, starId, { from });
+
+    await instance.transferStar(to, starId, { from });
+
+    assert.equal(await instance.ownerOf.call(starId), to);
 });
 
