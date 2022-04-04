@@ -4,10 +4,12 @@
 ### ToDo
 This Starter Code has already implemented the functionalities you implemented in the StarNotary (Version 2) exercise, and have comments in all the files you need to implement your tasks.
 
-- Contract address: 0x788e24F8d20AD22316C258603f37f0914EDe2D73
+- Truffle version: v5.5.6
+- OpenZeppelin version: v2.3.0
 - Token name: Star Notary Project
 - Token symbol: SNP
-- Deployer: 0xbd59a7cAF8C608c61F8787e8E7F8C19987F48136
+- Contract address: 0x788e24F8d20AD22316C258603f37f0914EDe2D73
+- Deployer address: 0xbd59a7cAF8C608c61F8787e8E7F8C19987F48136
 
 
 ### Dependencies
